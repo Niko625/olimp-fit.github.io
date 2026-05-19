@@ -1,15 +1,15 @@
 const express = require('express');
 const path = require('path');
-// Заменяем обычный sqlite3 на sqlite3-offline, чтобы Vercel не ругался при сборке
+// Используем offline версию, чтобы Vercel не ругался
 const sqlite3 = require('sqlite3-offline').verbose(); 
 const app = express();
 
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// Раскомментировали базу данных, чтобы переменная db снова существовала!
+// Раскомментировали базу данных, теперь db существует!
 const db = new sqlite3.Database(path.join(__dirname, 'olimp.db'), (err) => {
-    if (err) console.error(err.message);
+    if (err) console.error('Ошибка подключения:', err.message);
     else console.log('Подключено к базе SQLite.');
 });
 

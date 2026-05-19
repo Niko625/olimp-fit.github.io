@@ -2,9 +2,9 @@
   "name": "olimp-site",
   "version": "1.0.0",
   "description": "Современный адаптивный сайт фитнес-клуба на чистом HTML, CSS и JavaScript.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +12,6 @@
   "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1",
-    "sqlite3": "^6.0.1"
+    "sqlite3-offline": "^4.3.0"
   }
 }
