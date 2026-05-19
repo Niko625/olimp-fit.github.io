@@ -1,21 +1,20 @@
 const express = require('express');
 const path = require('path');
-// Используем offline версию, чтобы Vercel не ругался
-const sqlite3 = require('sqlite3-offline').verbose(); 
+const sqlite3 = require('sqlite3-offline').verbose();
+
 const app = express();
 
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// Раскомментировали базу данных, теперь db существует!
+// Подключение к БД (файл olimp.db должен лежать в корне проекта)
 const db = new sqlite3.Database(path.join(__dirname, 'olimp.db'), (err) => {
     if (err) console.error('Ошибка подключения:', err.message);
     else console.log('Подключено к базе SQLite.');
 });
 
-
+// Создание таблиц (если их нет)
 db.serialize(() => {
-    
     db.run(`CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
@@ -25,32 +24,28 @@ db.serialize(() => {
         createdAt TEXT
     )`);
 
-    
     db.run(`CREATE TABLE IF NOT EXISTS orders (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         userId INTEGER,
-        items TEXT,     -- Здесь будем хранить товары в формате JSON
-        total REAL,     -- Итоговая сумма
-        status TEXT,    -- Статус ("Оплачено", "В обработке")
-        date TEXT       -- Дата заказа
+        items TEXT,
+        total REAL,
+        status TEXT,
+        date TEXT
     )`);
 
-    
     db.run(`CREATE TABLE IF NOT EXISTS bookings (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         userId INTEGER,
-        className TEXT, -- Название тренировки (например, "Йога")
-        day TEXT,       -- День недели
-        time TEXT,      -- Время
+        className TEXT,
+        day TEXT,
+        time TEXT,
         createdAt TEXT
     )`);
 });
 
-/* =========================================
-   ЭНДПОИНТЫ (API ПУТИ)
-========================================= */
+// ========== API ЭНДПОИНТЫ ==========
 
-// --- АВТОРИЗАЦИЯ ---
+// Регистрация
 app.post('/api/register', (req, res) => {
     const { name, email, phone, password, createdAt } = req.body;
     const sql = `INSERT INTO users (name, email, phone, password, createdAt) VALUES (?, ?, ?, ?, ?)`;
@@ -60,6 +55,7 @@ app.post('/api/register', (req, res) => {
     });
 });
 
+// Логин
 app.post('/api/login', (req, res) => {
     const { login, password } = req.body;
     db.get(`SELECT * FROM users WHERE (email = ? OR phone = ?) AND password = ?`, [login, login, password], (err, user) => {
@@ -68,9 +64,7 @@ app.post('/api/login', (req, res) => {
     });
 });
 
-// --- ЗАКАЗЫ (Orders) ---
-
-// Сохранить новый заказ
+// Создать заказ
 app.post('/api/orders', (req, res) => {
     const { userId, items, total, status, date } = req.body;
     const sql = `INSERT INTO orders (userId, items, total, status, date) VALUES (?, ?, ?, ?, ?)`;
@@ -80,20 +74,17 @@ app.post('/api/orders', (req, res) => {
     });
 });
 
-// Получить все заказы конкретного пользователя (для профиля)
+// Получить заказы пользователя
 app.get('/api/orders/:userId', (req, res) => {
     const sql = `SELECT * FROM orders WHERE userId = ? ORDER BY id DESC`;
     db.all(sql, [req.params.userId], (err, rows) => {
         if (err) return res.status(500).json({ error: err.message });
-        // Обратно превращаем строку в нормальный массив перед отправкой на сайт
-        const orders = rows.map(row => ({...row, items: JSON.parse(row.items)}));
+        const orders = rows.map(row => ({ ...row, items: JSON.parse(row.items) }));
         res.json(orders);
     });
 });
 
-// --- ЗАПИСИ (Bookings) ---
-
-// Сохранить новую запись на тренировку
+// Запись на тренировку
 app.post('/api/bookings', (req, res) => {
     const { userId, className, day, time, createdAt } = req.body;
     const sql = `INSERT INTO bookings (userId, className, day, time, createdAt) VALUES (?, ?, ?, ?, ?)`;
@@ -103,7 +94,7 @@ app.post('/api/bookings', (req, res) => {
     });
 });
 
-// Получить записи конкретного пользователя (для профиля)
+// Получить записи пользователя
 app.get('/api/bookings/:userId', (req, res) => {
     const sql = `SELECT * FROM bookings WHERE userId = ? ORDER BY id DESC`;
     db.all(sql, [req.params.userId], (err, rows) => {
@@ -111,32 +102,6 @@ app.get('/api/bookings/:userId', (req, res) => {
         res.json(rows);
     });
 });
-const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-const app = express();
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, '/')));
-
-// Подключение к БД
-const db = new sqlite3.Database('olimp.db');
-
-// Настройка API для заказов
-app.post('/api/orders', (req, res) => {
-    const { userId, items, total, date } = req.body;
-    
-    // Вставляем заказ в таблицу orders
-    const sql = `INSERT INTO orders (userId, items, total, status, date) VALUES (?, ?, ?, ?, ?)`;
-    const params = [userId, JSON.stringify(items), total, 'Оплачено', date];
-
-    db.run(sql, params, function(err) {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json({ id: this.lastID, message: 'Заказ сохранен в базе' });
-    });
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Сервер запущен на порту ${PORT}`);
-});
+// Экспортируем app для Vercel (serverless)
+module.exports = app;

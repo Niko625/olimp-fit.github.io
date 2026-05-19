@@ -67,7 +67,6 @@ function initRegistration() {
       if (data.error) {
         if (typeof showToast === 'function') showToast(data.error, 'error');
       } else {
-        // Сохраняем только ТЕКУЩЕГО пользователя локально для сессии
         localStorage.setItem('olimp_current_user', JSON.stringify({ ...userData, id: data.id }));
         if (typeof showToast === 'function') showToast('Регистрация успешна!');
         setTimeout(() => { window.location.href = 'profile.html'; }, 1000);
