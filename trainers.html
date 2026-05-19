@@ -1,0 +1,103 @@
+<!--DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тренеры — ОЛИМП</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/adaptive.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+  <div id="page-loader">
+    <div class="loader-ring"></div>
+    <p class="loader-text">ОЛИМП</p>
+  </div>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo">
+        <div class="logo__icon"><i class="fas fa-dumbbell"></i></div>
+        <span>ОЛИМП</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html" class="nav__link">Главная</a>
+        <a href="services.html" class="nav__link">Услуги</a>
+        
+        <a href="price.html" class="nav__link">Прайс</a>
+        <a href="schedule.html" class="nav__link">Расписание</a>
+        <a href="shop.html" class="nav__link">Мерч</a>
+        <a href="about.html" class="nav__link">О нас</a>
+        <a href="contacts.html" class="nav__link">Контакты</a>
+        <a href="profile.html" class="nav__link active">Кабинет</a>
+      </nav>
+      <div class="header__actions">
+        <a href="cart.html" class="cart-badge btn btn-outline btn-sm"><i class="fas fa-shopping-cart"></i><span class="cart-badge__count">0</span></a>
+        <a href="login.html" class="btn btn-outline btn-sm">Вход</a>
+        <a href="registration.html" class="btn btn-primary btn-sm">Регистрация</a>
+        <button class="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+<section class="page-hero"><div class="container"><h1 data-aos="fade-up">Наши тренеры</h1><p data-aos="fade-up">Профессионалы с сертификатами</p></div></section>
+<section class="section"><div class="container"><div class="trainers-grid">
+<article class="glass-card trainer-card" data-aos="fade-up"><div class="trainer-card__photo"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c1498?w=500&q=80" alt="Игорь Петров — силовой тренинг"></div><div class="trainer-card__body"><h3>Игорь Петров</h3><p class="trainer-card__spec">Силовой тренинг</p><p class="trainer-card__exp">Стаж: 12 лет</p><p>Мастер спорта.</p><button class="btn btn-primary btn-sm" data-trainer="Игорь Петров">Записаться</button></div></article>
+<article class="glass-card trainer-card" data-aos="fade-up"><div class="trainer-card__photo"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=500&q=80" alt="Анна Смирнова — йога"></div><div class="trainer-card__body"><h3>Анна Смирнова</h3><p class="trainer-card__spec">Йога / Пилатес</p><p class="trainer-card__exp">Стаж: 8 лет</p><p>Yoga Alliance.</p><button class="btn btn-primary btn-sm" data-trainer="Анна Смирнова">Записаться</button></div></article>
+<article class="glass-card trainer-card" data-aos="fade-up"><div class="trainer-card__photo"><img src="https://images.unsplash.com/photo-1574680096145-b5cf8a110894?w=500&q=80" alt="Максим Орлов — кроссфит"></div><div class="trainer-card__body"><h3>Максим Орлов</h3><p class="trainer-card__spec">Кроссфит</p><p class="trainer-card__exp">Стаж: 10 лет</p><p>CrossFit Games.</p><button class="btn btn-primary btn-sm" data-trainer="Максим Орлов">Записаться</button></div></article>
+<article class="glass-card trainer-card" data-aos="fade-up"><div class="trainer-card__photo"><img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?w=500&q=80" alt="Елена Волкова — плавание"></div><div class="trainer-card__body"><h3>Елена Волкова</h3><p class="trainer-card__spec">Плавание</p><p class="trainer-card__exp">Стаж: 15 лет</p><p>Мастер спорта.</p><button class="btn btn-primary btn-sm" data-trainer="Елена Волкова">Записаться</button></div></article>
+<article class="glass-card trainer-card" data-aos="fade-up"><div class="trainer-card__photo"><img src="https://images.unsplash.com/photo-1583454118551-6c1c7f6c3b8a?w=500&q=80" alt="Денис Кузнецов — функциональный тренинг"></div><div class="trainer-card__body"><h3>Денис Кузнецов</h3><p class="trainer-card__spec">Функциональный тренинг</p><p class="trainer-card__exp">Стаж: 7 лет</p><p>TRX, реабилитация.</p><button class="btn btn-primary btn-sm" data-trainer="Денис Кузнецов">Записаться</button></div></article>
+</div></div></section>
+<div id="trainer-modal" class="modal-overlay"><div class="modal"><button class="modal__close">&times;</button><h2>Запись к тренеру</h2><p id="trainer-modal-name" style="margin-bottom:20px;color:var(--accent-purple)"></p><form id="trainer-book-form"><input type="hidden" id="trainer-book-name"><div class="form-group"><label>Имя</label><input name="name" required></div><div class="form-group"><label>Телефон</label><input name="phone" required></div><button type="submit" class="btn btn-primary btn-block">Отправить</button></form></div></div>
+<footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="index.html" class="logo"><div class="logo__icon"><i class="fas fa-dumbbell"></i></div><span>ОЛИМП</span></a>
+          <p>Премиальный спортивный комплекс. Стань сильнее уже сегодня.</p>
+          <div class="footer__social">
+            <a href="#" aria-label="VK"><i class="fab fa-vk"></i></a>
+            <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div><h4>Навигация</h4><ul><li><a href="services.html">Услуги</a></li><li><a href="trainers.html">Тренеры</a></li><li><a href="price.html">Прайс</a></li><li><a href="schedule.html">Расписание</a></li></ul></div>
+        <div><h4>Клуб</h4><ul><li><a href="about.html">О нас</a></li><li><a href="shop.html">Мерч</a></li><li><a href="contacts.html">Контакты</a></li><li><a href="profile.html">Личный кабинет</a></li></ul></div>
+        <div><h4>Контакты</h4><ul><li>+7 (495) 123-45-67</li><li>info@olimp-fit.ru</li><li>ул. Спортивная, 15</li></ul></div>
+      </div>
+      <div class="footer__bottom"><p>&copy; 2026 СПОРТКОМПЛЕКС «ОЛИМП». Все права защищены.</p></div>
+    </div>
+  </footer>
+
+  <div id="payment-modal" class="modal-overlay">
+    <div class="modal payment-modal">
+      <button class="modal__close" aria-label="Закрыть">&times;</button>
+      <h2 id="payment-title">Оплата</h2>
+      <form id="payment-form" class="payment-form">
+        <div class="form-group"><label>Номер карты</label><input type="text" placeholder="0000 0000 0000 0000" maxlength="19" required></div>
+        <div class="card-row">
+          <div class="form-group"><label>Срок</label><input type="text" placeholder="MM/YY" maxlength="5" required></div>
+          <div class="form-group"><label>CVV</label><input type="text" placeholder="***" maxlength="3" required></div>
+        </div>
+        <div class="form-group"><label>Имя на карте</label><input type="text" required></div>
+        <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-lock"></i> Оплатить</button>
+        <p style="text-align:center;margin-top:12px;font-size:0.8rem;color:var(--text-secondary)">Демо-оплата. Данные не передаются.</p>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/trainers.js"></script>
+
+  <script src="js/slider.js"></script>
+  <script>AOS.init({ duration: 800, once: true });</script>
+</body>
+</html>

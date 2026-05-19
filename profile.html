@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Личный кабинет — ОЛИМП</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/adaptive.css">
+</head>
+<body>
+  <div id="page-loader"><div class="loader-ring"></div><p class="loader-text">ОЛИМП</p></div>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo"><div class="logo__icon"><i class="fas fa-dumbbell"></i></div><span>ОЛИМП</span></a>
+      <nav class="nav">
+        <a href="index.html" class="nav__link">Главная</a>
+        <a href="services.html" class="nav__link">Услуги</a>
+        <a href="profile.html" class="nav__link active">Кабинет</a>
+        <a href="price.html" class="nav__link">Прайс</a>
+      </nav>
+      <div class="header__actions">
+        <button id="logout-btn" class="btn btn-outline btn-sm">Выход</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container"><h1>Личный кабинет</h1></div>
+  </section>
+
+  <section class="section" id="profile-content">
+    <div class="container profile-grid">
+      <aside class="glass-card profile-sidebar">
+        <div class="profile-avatar" id="profile-avatar">?</div>
+        <h3 id="profile-name" style="text-align:center"></h3>
+        <p id="profile-email" style="text-align:center;color:var(--text-secondary);font-size:0.9rem"></p>
+        <p id="profile-phone" style="text-align:center;color:var(--text-secondary);font-size:0.85rem"></p>
+      </aside>
+      <main>
+        <div class="profile-section glass-card">
+          <h3>Активный абонемент</h3>
+          <div id="profile-subscription"></div>
+        </div>
+        <div class="profile-section">
+          <h3>История заказов</h3>
+          <div id="profile-orders"></div>
+        </div>
+        <div class="profile-section">
+          <h3>Записи на тренировки</h3>
+          <div id="profile-bookings"></div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <footer class="footer"><div class="container"><div class="footer__bottom"><p>&copy; 2026 ОЛИМП</p></div></div></footer>
+
+  <div id="toast-container"></div>
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

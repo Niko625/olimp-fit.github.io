@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация — ОЛИМП</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/adaptive.css">
+</head>
+<body class="auth-body">
+  <div class="auth-bg">
+    <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?w=1920&q=80" alt="Фитнес-зал Олимп">
+  </div>
+  <div class="auth-overlay" aria-hidden="true"></div>
+
+  <button type="button" class="auth-close" id="auth-close" aria-label="Закрыть и вернуться">
+    <i class="fas fa-times"></i>
+  </button>
+
+  <div class="auth-page">
+    <div class="glass-card auth-card">
+      <a href="index.html" class="logo" style="justify-content:center;margin-bottom:30px">
+        <div class="logo__icon"><i class="fas fa-dumbbell"></i></div>
+        <span>ОЛИМП</span>
+      </a>
+      <h2 style="text-align:center;margin-bottom:30px">Регистрация</h2>
+      <form id="register-form">
+        <div class="form-group"><label>Имя</label><input type="text" name="name" required placeholder="Ваше имя"></div>
+        <div class="form-group"><label>Email</label><input type="email" name="email" required placeholder="email@example.com"></div>
+        <div class="form-group"><label>Телефон</label><input type="tel" name="phone" required placeholder="+7 (999) 000-00-00"></div>
+        <div class="form-group"><label>Пароль</label><input type="password" name="password" required minlength="6" placeholder="Минимум 6 символов"></div>
+        <button type="submit" class="btn btn-primary btn-block">Создать аккаунт</button>
+      </form>
+      <p class="auth-link">Уже есть аккаунт? <a href="login.html">Войти</a></p>
+    </div>
+    <a href="index.html" class="auth-back-link"><i class="fas fa-arrow-left"></i> На главную</a>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="js/images.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script>document.querySelector('.auth-bg img').src = IMGS.authBg;</script>
+</body>
+</html>
