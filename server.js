@@ -1,20 +1,21 @@
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+// Заменяем обычный sqlite3 на sqlite3-offline, чтобы Vercel не ругался при сборке
+const sqlite3 = require('sqlite3-offline').verbose(); 
 const app = express();
 
 app.use(express.json());
-app.use(express.static(__dirname)); 
+app.use(express.static(__dirname));
 
-// Подключение к БД
-const db = new sqlite3.Database('./olimp.db', (err) => {
+// Раскомментировали базу данных, чтобы переменная db снова существовала!
+const db = new sqlite3.Database(path.join(__dirname, 'olimp.db'), (err) => {
     if (err) console.error(err.message);
-    console.log('Подключено к базе SQLite.');
+    else console.log('Подключено к базе SQLite.');
 });
 
-// ИНИЦИАЛИЗАЦИЯ ТАБЛИЦ
+
 db.serialize(() => {
-    // 1. Таблица пользователей (у вас она уже есть, эта команда её просто пропустит)
+    
     db.run(`CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
@@ -24,7 +25,7 @@ db.serialize(() => {
         createdAt TEXT
     )`);
 
-    // 2. НОВАЯ: Таблица заказов (корзина/абонементы)
+    
     db.run(`CREATE TABLE IF NOT EXISTS orders (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         userId INTEGER,
@@ -34,7 +35,7 @@ db.serialize(() => {
         date TEXT       -- Дата заказа
     )`);
 
-    // 3. НОВАЯ: Таблица записей на тренировки
+    
     db.run(`CREATE TABLE IF NOT EXISTS bookings (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         userId INTEGER,
@@ -73,7 +74,6 @@ app.post('/api/login', (req, res) => {
 app.post('/api/orders', (req, res) => {
     const { userId, items, total, status, date } = req.body;
     const sql = `INSERT INTO orders (userId, items, total, status, date) VALUES (?, ?, ?, ?, ?)`;
-    // SQLite не умеет хранить массивы, поэтому переводим корзину (items) в строку JSON
     db.run(sql, [userId, JSON.stringify(items), total, status, date], function(err) {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ id: this.lastID, message: "Заказ успешно оформлен!" });
@@ -136,6 +136,7 @@ app.post('/api/orders', (req, res) => {
     });
 });
 
-app.listen(3000, () => console.log('Сервер: http://localhost:3000'));
-
-app.listen(3000, () => console.log('Сервер: http://localhost:3000'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Сервер запущен на порту ${PORT}`);
+});
